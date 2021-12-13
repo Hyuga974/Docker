@@ -1,0 +1,9 @@
+Description=Periodically run our backup script
+Requires=backup.service
+
+[Timer]
+Unit=backup.service
+OnCalendar=*-*-* 2:25:00
+
+[Install]
+WantedBy=timers.target

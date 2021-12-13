@@ -1,0 +1,10 @@
+[Unit]
+Description=Our own lil backup service 
+
+[Service]
+ExecStart=sudo bash /srv/backup.sh /srv/backup /home/tamashi/Forum/
+Type=oneshot
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target

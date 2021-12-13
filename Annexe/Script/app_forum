@@ -1,0 +1,28 @@
+FROM ubuntu
+
+RUN apt-get update -y
+
+# Install Golang
+RUN apt-get install -y wget
+RUN wget https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
+RUN tar -zxvf go1.13.1.linux-amd64.tar.gz -C /usr/local
+# RUN wget -c https://dl.google.com/go/go1.14.2.linux-amd64.tar.gz -O - | tar -xz -C /usr/local
+# RUN apt-get install -y golang
+
+# Setting golang
+RUN echo "export GOPATH=\$HOME/go" >> /etc/profile
+RUN echo "export PATH=\$PATH:/usr/local/go/bin:\$GOPATH/bin" >> /etc/profile
+# RUN source ~/.bash_profile
+
+# Install sqlite
+RUN apt-get install -y sqlite3
+
+# Install gcc
+RUN apt-get install -y build-essential
+
+COPY ./Forum /server
+
+# Start server.go at the boot
+ENTRYPOINT cd server/src/ && /usr/local/go/bin/go run server.go
+
+EXPOSE 4444
